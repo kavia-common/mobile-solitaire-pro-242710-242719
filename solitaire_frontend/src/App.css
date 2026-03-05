@@ -1,104 +1,428 @@
-/* CSS Variables for Theme Management */
+/* Ocean Professional theme + mobile-first layout */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --ocean-primary: #2563eb;
+  --ocean-secondary: #f59e0b;
+  --ocean-bg: #f9fafb;
+  --ocean-surface: #ffffff;
+  --ocean-text: #111827;
+  --ocean-muted: rgba(17, 24, 39, 0.65);
+  --ocean-border: rgba(17, 24, 39, 0.12);
+
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 8px 20px rgba(15, 23, 42, 0.10);
+
+  --radius: 14px;
+  --card-radius: 12px;
+
+  --card-w: clamp(56px, 12vw, 78px);
+  --card-h: calc(var(--card-w) * 1.35);
+
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+
+  --tap: 44px;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+[data-theme="ocean-dark"] {
+  --ocean-bg: #0b1220;
+  --ocean-surface: #111a2e;
+  --ocean-text: #e5e7eb;
+  --ocean-muted: rgba(229, 231, 235, 0.7);
+  --ocean-border: rgba(229, 231, 235, 0.12);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 .App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  color: var(--ocean-text);
+  background:
+    radial-gradient(1200px 600px at 20% -10%, rgba(37, 99, 235, 0.14), transparent 55%),
+    radial-gradient(900px 500px at 95% 10%, rgba(245, 158, 11, 0.10), transparent 55%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.0), rgba(255, 255, 255, 0.0)),
+    var(--ocean-bg);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.SrOnly {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.TopBar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding-top: calc(10px + var(--safe-top));
+  padding-bottom: 10px;
+  padding-left: 12px;
+  padding-right: 12px;
+  backdrop-filter: blur(12px);
+  background: linear-gradient(
+    180deg,
+    rgba(249, 250, 251, 0.82),
+    rgba(249, 250, 251, 0.55)
+  );
+  border-bottom: 1px solid var(--ocean-border);
 }
 
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+[data-theme="ocean-dark"] .TopBar {
+  background: linear-gradient(
+    180deg,
+    rgba(11, 18, 32, 0.78),
+    rgba(11, 18, 32, 0.50)
+  );
+}
+
+.TopBarInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.Brand {
   display: flex;
   flex-direction: column;
+  line-height: 1.1;
+  user-select: none;
+}
+
+.BrandTitle {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-size: 16px;
+}
+
+.BrandSub {
+  font-size: 12px;
+  color: var(--ocean-muted);
+  margin-top: 2px;
+}
+
+.Actions {
+  display: flex;
   align-items: center;
+  gap: 8px;
+}
+
+.Btn {
+  min-height: var(--tap);
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--ocean-border);
+  background: var(--ocean-surface);
+  color: var(--ocean-text);
+  box-shadow: var(--shadow-sm);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.Btn:active {
+  transform: translateY(1px);
+}
+
+.BtnPrimary {
+  background: linear-gradient(180deg, rgba(37, 99, 235, 1), rgba(29, 78, 216, 1));
+  border-color: rgba(37, 99, 235, 0.55);
+  color: white;
+}
+
+.BtnIcon {
+  width: var(--tap);
+  padding: 10px 0;
+  display: inline-flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
+}
+
+.BtnSecondary {
+  background: linear-gradient(180deg, rgba(245, 158, 11, 1), rgba(217, 119, 6, 1));
+  border-color: rgba(245, 158, 11, 0.55);
+  color: #111827;
+}
+
+.Board {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 12px 12px calc(84px + var(--safe-bottom));
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.Row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.TopRow {
+  flex-wrap: wrap;
+}
+
+.StackGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: calc(var(--card-w) + 8px);
+}
+
+.StackLabel {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ocean-muted);
+}
+
+.Stack,
+.TableauSurface {
   position: relative;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.Slot {
+  width: var(--card-w);
+  height: var(--card-h);
+  border-radius: var(--card-radius);
+  border: 1px dashed var(--ocean-border);
+  background: rgba(255, 255, 255, 0.35);
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow-sm);
+  user-select: none;
 }
 
-.theme-toggle {
+[data-theme="ocean-dark"] .Slot {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.EmptyHint,
+.EmptyTableau {
+  font-weight: 800;
+  font-size: 18px;
+  color: rgba(37, 99, 235, 0.55);
+}
+
+.Foundations {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.TableauRow {
+  overflow-x: auto;
+  padding-bottom: 6px;
+  gap: 10px;
+}
+
+.TableauPile {
+  position: relative;
+  min-width: calc(var(--card-w) + 10px);
+}
+
+.TableauSurface {
+  width: calc(var(--card-w) + 10px);
+  min-height: calc(var(--card-h) + 110px);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid var(--ocean-border);
+  box-shadow: var(--shadow-sm);
+  padding: 6px 5px;
+}
+
+[data-theme="ocean-dark"] .TableauSurface {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.TableauCardWrapper {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
+  left: 5px;
+}
+
+.HintTray {
+  border-radius: var(--radius);
+  background: var(--ocean-surface);
+  border: 1px solid var(--ocean-border);
+  box-shadow: var(--shadow-sm);
+  padding: 12px;
+}
+
+.HintTitle {
+  font-weight: 800;
+  margin-bottom: 8px;
   font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+.HintList {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--ocean-text);
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+.HintEmpty {
+  color: var(--ocean-muted);
+  font-size: 13px;
+  line-height: 1.35;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.BottomBar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px 12px calc(10px + var(--safe-bottom));
+  background: rgba(255, 255, 255, 0.82);
+  border-top: 1px solid var(--ocean-border);
+  backdrop-filter: blur(12px);
+  z-index: 20;
+}
+
+[data-theme="ocean-dark"] .BottomBar {
+  background: rgba(11, 18, 32, 0.75);
+}
+
+.BottomBarInner {
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Stats {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  color: var(--ocean-muted);
+  font-size: 12px;
+  user-select: none;
+}
+
+.Stat strong {
+  color: var(--ocean-text);
+  font-size: 14px;
+}
+
+.BottomActions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.Card {
+  width: var(--card-w);
+  height: var(--card-h);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--ocean-border);
+  background: var(--ocean-surface);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 6px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.CardSelected {
+  outline: 2px solid rgba(37, 99, 235, 0.8);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15), var(--shadow-md);
+}
+
+.CardFaceDown {
+  background:
+    linear-gradient(180deg, rgba(37, 99, 235, 0.9), rgba(29, 78, 216, 0.95)),
+    radial-gradient(40px 40px at 15% 20%, rgba(245, 158, 11, 0.55), transparent 60%);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.CardCorner {
+  font-weight: 900;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.CardCornerBottom {
+  transform: rotate(180deg);
+}
+
+.SuitRed {
+  color: #ef4444;
+}
+
+.SuitBlack {
+  color: #111827;
+}
+
+[data-theme="ocean-dark"] .SuitBlack {
+  color: #e5e7eb;
+}
+
+.CardCenter {
+  font-size: 22px;
+  font-weight: 900;
+  text-align: center;
+  margin-top: -6px;
+}
+
+.Toast {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(74px + var(--safe-bottom));
+  z-index: 30;
+  max-width: 520px;
+  margin: 0 auto;
+  border-radius: 16px;
+  padding: 12px 12px;
+  border: 1px solid var(--ocean-border);
+  box-shadow: var(--shadow-md);
+  background: var(--ocean-surface);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.ToastMsg {
+  font-size: 13px;
+  color: var(--ocean-text);
+  line-height: 1.35;
+}
+
+.ToastInfo {
+  border-left: 4px solid rgba(37, 99, 235, 0.9);
+}
+
+.ToastSuccess {
+  border-left: 4px solid rgba(245, 158, 11, 0.9);
+}
+
+.ToastError {
+  border-left: 4px solid rgba(239, 68, 68, 0.9);
+}
+
+@media (min-width: 840px) {
+  .Board {
+    grid-template-columns: 1fr 260px;
+    align-items: start;
   }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+  .HintTray {
+    position: sticky;
+    top: 92px;
   }
 }

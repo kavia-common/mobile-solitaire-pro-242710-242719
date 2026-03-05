@@ -1,8 +1,10 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
+test("renders solitaire controls", () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(screen.getByText(/mobile solitaire/i)).toBeInTheDocument();
+  expect(screen.getAllByText(/new/i)[0]).toBeInTheDocument();
+  expect(screen.getAllByText(/undo/i)[0]).toBeInTheDocument();
+  expect(screen.getAllByText(/hint/i)[0]).toBeInTheDocument();
 });
